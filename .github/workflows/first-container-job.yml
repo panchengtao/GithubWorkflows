@@ -1,3 +1,7 @@
+name: GitHub Actions Container Jobs
+run-name: ${{ github.actor }} is testing out container jobs 🚀
+on: [push]
+
 jobs:
   container-job:
     runs-on: ubuntu-latest
