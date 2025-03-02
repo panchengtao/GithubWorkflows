@@ -33,7 +33,7 @@ jobs:
 
       - name: Connect to PostgreSQL
         env:
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+          DATABASE_URL: postgres://postgres:postgres@postgres/postgres
         run: go run main.go
 
       - name: Test
