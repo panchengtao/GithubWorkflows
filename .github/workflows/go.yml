@@ -26,15 +26,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Dependencies
-        run: go mod download
+        run: go mod download && go build -v ./...
 
       - name: Connect to PostgreSQL
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
         run: go run main.go
-
-      - name: Build
-        run: go build -v ./...
 
       - name: Test
         run: go test -v ./...
