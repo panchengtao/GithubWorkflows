@@ -1,41 +1,18 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
-name: Go Build and Test
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: After Build
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_run:
+    workflows: [Build]
+    types: [completed]
 
 jobs:
-  build:
+  on-success:
     runs-on: ubuntu-latest
-    container: golang:1.24
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Fix Git safe directory issue
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-
-      - name: Install Dependencies
-        run: go mod download && go build -v ./...
-
-      - name: Connect to PostgreSQL
-        env:
-          DATABASE_URL: postgres://postgres:postgres@postgres/postgres
-        run: go run main.go
-
-      - name: Test
-        run: go test -v ./...
-
+      - run: echo 'The triggering workflow passed'
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'The triggering workflow failed'
