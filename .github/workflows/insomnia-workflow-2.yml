@@ -1,8 +1,8 @@
-name: After Build
+name: Insomnia-Workflow-After-Build
 
 on:
   workflow_run:
-    workflows: [Build]
+    workflows: [Insomnia-Workflow-Build]
     types: [completed]
 
 jobs:

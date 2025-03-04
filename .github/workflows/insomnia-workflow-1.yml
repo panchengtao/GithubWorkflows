@@ -1,4 +1,4 @@
-name: Build
+name: Insomnia-Workflow-Build
 run-name: ${{ github.actor }} is testing out another GitHub Actions 🚀
 on: [push]
 jobs:
